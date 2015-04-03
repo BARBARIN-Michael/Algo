@@ -2,6 +2,11 @@ NAME = libfts.a
 
 SRCS = src/ft_bzero.s \
 	   src/ft_strcat.s \
+	   src/ft_isalpha.s \
+	   src/ft_isdigit.s \
+	   src/ft_isalnum.s \
+	   src/ft_tolower.s \
+	   src/ft_toupper.s \
 
 INCLUDES = include/
 

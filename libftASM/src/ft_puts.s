@@ -1,29 +1,19 @@
 ; **************************************************************************** #
 ;                                                                              #
 ;                                                         :::      ::::::::    #
-;    ft_bzero.s                                         :+:      :+:    :+:    #
+;    ft_puts.s                                          :+:      :+:    :+:    #
 ;                                                     +:+ +:+         +:+      #
 ;    By: mbarbari <mbarbari@student.42.fr>          +#+  +:+       +#+         #
 ;                                                 +#+#+#+#+#+   +#+            #
-;    Created: 2015/04/02 15:16:03 by mbarbari          #+#    #+#              #
-;    Updated: 2015/04/02 15:16:03 by mbarbari         ###   ########.fr        #
+;    Created: 2015/04/03 15:43:26 by mbarbari          #+#    #+#              #
+;    Updated: 2015/04/03 15:43:26 by mbarbari         ###   ########.fr        #
 ;                                                                              #
 ; **************************************************************************** #
 
 section .text
-	global ft_bzero
+	extern write
+	global ft_puts
 
-ft_bzero:
-	cmp rdi, 0
-	je end
-
-boucle:
-	cmp rsi, 0
-	je end
-	mov [rdi], byte 0
-	inc rdi
-	dec rsi
-	jmp boucle
-
-end:
-	ret
+ft_puts:
+	mov rcx, rdi
+	call 

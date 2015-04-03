@@ -1,29 +1,36 @@
 ; **************************************************************************** #
 ;                                                                              #
 ;                                                         :::      ::::::::    #
-;    ft_bzero.s                                         :+:      :+:    :+:    #
+;    ft_toupper.s                                       :+:      :+:    :+:    #
 ;                                                     +:+ +:+         +:+      #
 ;    By: mbarbari <mbarbari@student.42.fr>          +#+  +:+       +#+         #
 ;                                                 +#+#+#+#+#+   +#+            #
-;    Created: 2015/04/02 15:16:03 by mbarbari          #+#    #+#              #
-;    Updated: 2015/04/02 15:16:03 by mbarbari         ###   ########.fr        #
+;    Created: 2015/04/03 15:43:26 by mbarbari          #+#    #+#              #
+;    Updated: 2015/04/03 15:43:26 by mbarbari         ###   ########.fr        #
 ;                                                                              #
 ; **************************************************************************** #
 
 section .text
-	global ft_bzero
+	extern ft_isdigit
+	global ft_toupper
 
-ft_bzero:
-	cmp rdi, 0
-	je end
+ft_toupper:
+	enter 0, 0
+	call ft_isdigit
+	cmp eax, 1
+	jne .finishKO
+	cmp rdi, 'a'
+	jl .finishKO
+	cmp rdi, 'z'
+	jg .finishKO
 
-boucle:
-	cmp rsi, 0
-	je end
-	mov [rdi], byte 0
-	inc rdi
-	dec rsi
-	jmp boucle
+.finishOK:
+	mov rax, rdi
+	mov rax, [rax - 32]
+	leave
+	ret
 
-end:
+.finishKO:
+	mov rax, rdi
+	leave
 	ret
