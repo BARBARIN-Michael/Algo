@@ -15,7 +15,7 @@
 section .text
 	global ft_isdigit
 
-ft_isalpha:
+ft_isdigit:
 
 .controldigit:
 	cmp rdi, '0'

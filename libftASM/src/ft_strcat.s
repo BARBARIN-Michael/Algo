@@ -1,10 +1,10 @@
 section .text
 	global ft_strcat
-; rdi, rsi, rdx
+
 ft_strcat:
+	enter 0, 0
 
 .test:
-	enter 0, 0
 	mov rax, rdi
 	cmp rdi, 0
 	jne .boucle_rdi
@@ -27,7 +27,6 @@ ft_strcat:
 	jmp .boucle_rdi
 
 .end:
-	inc rdi
 	mov [rdi], byte 0
 	leave
 	ret

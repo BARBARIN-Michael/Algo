@@ -3,10 +3,19 @@ NAME = libfts.a
 SRCS = src/ft_bzero.s \
 	   src/ft_strcat.s \
 	   src/ft_isalpha.s \
+	   src/ft_isascii.s \
 	   src/ft_isdigit.s \
+	   src/ft_isprint.s \
 	   src/ft_isalnum.s \
 	   src/ft_tolower.s \
 	   src/ft_toupper.s \
+	   src/ft_strlen.s \
+	   src/ft_puts.s \
+	   src/ft_memset.s \
+	   src/ft_memcpy.s \
+	   src/ft_strdup.s \
+	   src/ft_strsplit.s \
+	   src/ft_cat.s
 
 INCLUDES = include/
 
@@ -36,7 +45,7 @@ libasm.out: $(NAME) main.o
 	$(CC) -Iinclude/ main.o -o $@ -L. -lfts 
 
 lib.out: $(NAME) main.o
-	$(CC) -I ./libft/Include/ main.o -o $@ -L. -lft
+	$(CC) -Iinclude/ main.o -o $@ -L. -lft
 
 $(NAME): $(OBJS)
 	$(AR) -rcs $(NAME) $?

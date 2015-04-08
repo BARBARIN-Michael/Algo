@@ -1,32 +1,33 @@
 ; **************************************************************************** #
 ;                                                                              #
 ;                                                         :::      ::::::::    #
-;    ft_tolower.s                                       :+:      :+:    :+:    #
+;    ft_strlen.s                                        :+:      :+:    :+:    #
 ;                                                     +:+ +:+         +:+      #
 ;    By: mbarbari <mbarbari@student.42.fr>          +#+  +:+       +#+         #
 ;                                                 +#+#+#+#+#+   +#+            #
-;    Created: 2015/04/03 15:43:26 by mbarbari          #+#    #+#              #
-;    Updated: 2015/04/03 15:43:26 by mbarbari         ###   ########.fr        #
+;    Created: 2015/04/04 10:24:00 by mbarbari          #+#    #+#              #
+;    Updated: 2015/04/04 10:24:00 by mbarbari         ###   ########.fr        #
 ;                                                                              #
 ; **************************************************************************** #
 
+; rdi
+
 section .text
-	global ft_toupper
+	global ft_strlen
 
-ft_toupper:
-	enter 0, 0
-	cmp rdi, 'a'
-	jl .finishKO
-	cmp rdi, 'z'
-	jg .finishKO
+ft_strlen:
+	mov rax, 0
+	cmp rdi, 0
+	jz .leave
 
-.finishOK:
-	mov rax, rdi
-	sub rax, 32
-	leave
-	ret
+.while:
+	xor al, al
+	xor rcx, rcx
+	dec rcx         ; on rep que sur une valeur <>0
+	repne scasb
+	inc rcx         ; on enleve le hack de la decrementation
+	not rcx         ; passe la valeur en positive (equivalent a neg)
 
-.finishKO:
-	mov rax, rdi
-	leave
+.leave:
+	mov rax, rcx
 	ret

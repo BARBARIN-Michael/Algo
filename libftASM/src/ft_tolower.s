@@ -11,14 +11,10 @@
 ; **************************************************************************** #
 
 section .text
-	extern ft_isdigit
 	global ft_tolower
 
 ft_tolower:
 	enter 0, 0
-	call ft_isdigit
-	cmp eax, 1
-	jne .finishKO
 	cmp rdi, 'A'
 	jl .finishKO
 	cmp rdi, 'Z'
@@ -26,7 +22,7 @@ ft_tolower:
 
 .finishOK:
 	mov rax, rdi
-	mov rax, [rax + 32]
+	add rax, 32
 	leave
 	ret
 
