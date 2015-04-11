@@ -1,8 +1,7 @@
-
 ; **************************************************************************** #
 ;                                                                              #
 ;                                                         :::      ::::::::    #
-;    ft_cat.s                                        :+:      :+:    :+:    #
+;    ft_memalloc.s                                      :+:      :+:    :+:    #
 ;                                                     +:+ +:+         +:+      #
 ;    By: mbarbari <mbarbari@student.42.fr>          +#+  +:+       +#+         #
 ;                                                 +#+#+#+#+#+   +#+            #
@@ -11,42 +10,21 @@
 ;                                                                              #
 ; **************************************************************************** #
 
-; rdi, rsi, rdx
-extern ft_puts
-extern ft_bzero
-global ft_cat
+section .text
+	extern malloc
+	extern ft_bzero 
+	global ft_memalloc
 
-ft_cat:
-	enter 4096, 0
+ft_memalloc:
 	mov r12, rdi
-	mov rsi, rsp    ; buffer
+	enter 0, 0
+	call malloc
+	cmp rax, 0
+	je end
+	mov rdi, rax
+	mov rsi, r12
+	call ft_bzero
 
-.read:
-	mov rax, 0x2000003
-	mov rdi, r12      ; fd stdin
-	mov rdx, 4095   ; n read
-	syscall
-	jc .endKO
-	mov r13, rax
-	mov [rsi + rax], byte 0
-
-.write:
-	mov rdi,1     ; on transfert le buffer
-	mov rdx, rax    ; n caractere a ecrire
-	mov rax, 0x2000004
-	syscall
-
-.ifout:
-	cmp r13, 0
-	jle .end
-	jmp .read
-
-.end:
-	mov rax, 0
-	leave
-	ret
-
-.endKO:
-	mov rax, 1
+end:
 	leave
 	ret

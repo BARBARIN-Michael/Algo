@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kdezaphi <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: mbarbari <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/03/14 15:52:56 by kdezaphi          #+#    #+#             */
-/*   Updated: 2015/04/07 18:44:51 by mbarbari         ###   ########.fr       */
+/*   Created: 2015/04/10 12:09:59 by mbarbari          #+#    #+#             */
+/*   Updated: 2015/04/10 15:59:31 by mbarbari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 #include <ctype.h>
 #include <libftasm.h>
 #include <stdlib.h>
+
 #define RESET "\033[0m"
 #define RED "\033[31m"
 #define GREEN "\033[32m"
@@ -274,6 +275,39 @@ static void	check_ft_tolower(void)
 		printf(RED"tolower FAIL"RESET"\n");
 }
 
+static void	check_ft_putsfd(void)
+{
+	char	*str = NULL;
+	int		a;
+	int		b;
+	int		test;
+
+	test = 0;
+	printf(CYAN"Begin test for puts"RESET"\n");
+	printf("empty string:\n");
+	b = puts("");
+	a = ft_putsfd("", 1);
+	if (a != b)
+		test = 1;
+	printf("simple string:\n");
+	b = puts("coucou");
+	a = ft_putsfd("coucou", 1);
+	if (a != b)
+		test = 1;
+	printf("NULL string:\n");
+	b = puts(str);
+	a = ft_putsfd(str, 1);
+	if (a != b)
+		test = 1;
+	if (test)
+		printf(GREEN"tolower OK"RESET"\n");
+	else
+		printf(RED"tolower FAIL"RESET"\n");
+
+	printf(CYAN"End test for puts"RESET"\n");
+}
+
+
 static void	check_ft_puts(void)
 {
 	char	*str = NULL;
@@ -421,87 +455,120 @@ static void	check_ft_strdup(void)
 		printf(GREEN"strdup OK"RESET"\n");
 }
 
-/*
+static void	check_ft_pow()
+{
+	int test = 0; 
+	int err = 0;
+
+	test = ft_pow(5, 3);
+	if (test == 125)
+	{
+		test = ft_pow(10, 4);
+		if (test == 10000)
+		{
+			test = ft_pow(10, 0);
+			if (test != 1) {
+				printf(RED"pow KO"RESET"\n");
+				err = 1;
+			}
+		}
+		else {
+			printf(RED"pow KO"RESET"\n");
+			err = 1;
+		}
+	}
+	else {
+		printf(RED"pow KO"RESET"\n");
+		err = 1;
+	}
+	if (err == 0)
+		printf(GREEN"pow OK"RESET"\n");
+}
+
+static void check_ft_strchr()
+{
+	char test[] = "si je dit des conneries";
+	char *ret;
+
+	ret = ft_strchr(test, 'd');
+	if (strcmp(ret, "dit des conneries") == 0)
+		printf(GREEN"strchr OK"RESET"\n");
+	else
+		printf(RED"strchr KO"RESET"\n");
+}
+
+static void check_ft_max()
+{
+	int test1 = 9;
+	int test2 = 4;
+	int reslt = 0;
+
+	if (ft_max(4, 9) != 9)
+		reslt = 1;
+	if (ft_max(9, 4) != 9)
+		reslt = 1;
+	reslt == 0 ? printf(GREEN"Max OK"RESET"\n"), 1 : printf(RED"Max KO"RESET"\n"), 0;
+
+}
+
 static void check_ft_putchar(void)
 {
 	char i;
 
 	i = 32;
 	printf("debut des test ft_putchar\n");
-	printf(" !\"#$&'()*+,-./0123456789:;<=>?@ABDEFGHIJKLMNOPQRSTUVWXYZ[]^_`abcdefghiklmopqrstuvwxyz{|}\n");
+	printf(" !\"#$%%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}\n");
 	while (i < 126)
 	{
 		ft_putchar(i);
 		i++;
 	}
-	printf("fin des test ft_putchar\n");
-}
-*/
-
-static void check_ft_strsplit()
-{
-	char test[] = "Si je test cette phrase qui me permet de split avec espace\0";
-	char **str = (char **)malloc(8);
-
-	printf("de la merde en boite %p\n", str);
-	str = ft_strsplit(test, ' ');
-	printf("de la merde en boite %p\n", str);
-	if (!str)
-		return ;
-	if (strcmp(str[0], "Si") == 0)
-		printf("strsplit test 1 :"GREEN" OK");
-	else
-		printf("strsplit test 1 :"RED" KO");
-	if (strcmp(str[4], "phrase") == 0)
-		printf("strsplit test 2 :"GREEN" OK");
-	else
-		printf("strsplit test 2 :"RED" KO");
-	if (strcmp(str[11], "espace") == 0)
-		printf("strsplit test 3 :"GREEN" OK");
-	else
-		printf("strsplit test 3 :"RED" KO");
+	printf("\nfin des test ft_putchar\n");
 }
 
 int			main(int ac, char **av)
 {
-	//	int		fd;
+	int		fd;
 
 	(void)av;
 	if (ac == 1)
 	{
-//		check_ft_bzero();
-//		check_ft_strcat();
-//		check_ft_isalpha();
-//		check_ft_isdigit();
-//		check_ft_isalnum();
-//		check_ft_isascii();
-//		check_ft_isprint();
-//		check_ft_toupper();
-//		check_ft_tolower();
-//		check_ft_puts();
-//		check_ft_strlen();
-//		check_ft_memset();
-//		check_ft_memcpy();
-//		check_ft_strdup();
-		check_ft_strsplit();
-//		printf(CYAN"Test for cat on fd = -3"RESET"\n");
-//		ft_cat(-3);
-//		printf(CYAN"Begin test for cat on STDIN"RESET"\n");
-//		ft_cat(0);
-//		printf(CYAN"End test for cat on STDIN"RESET"\n");
-	//	check_ft_putchar();
+		check_ft_bzero();
+		check_ft_strcat();
+		check_ft_isalpha();
+		check_ft_isdigit();
+		check_ft_isalnum();
+		check_ft_isascii();
+		check_ft_isprint();
+		check_ft_toupper();
+		check_ft_tolower();
+		check_ft_puts();
+		check_ft_strlen();
+		check_ft_memset();
+		check_ft_memcpy();
+		check_ft_strdup();
+		check_ft_pow();
+		check_ft_strchr();
+		check_ft_max();
+		check_ft_putchar();
+		check_ft_putsfd();
+		printf(CYAN"Test for cat on fd = -3"RESET"\n");
+		ft_cat(-3);
+		printf(CYAN"Begin test for cat on STDIN"RESET"\n");
+		ft_cat(0);
+		printf(CYAN"End test for cat on STDIN"RESET"\n");
 	}
 	else if (ac == 2)
 	{
-		/*		if ((fd = open(av[1], O_RDONLY)) > -1)
-				{
-				ft_cat(fd);
-				close(fd);
-				}
-				else
-				printf("ft_cat: %s: %s\n", av[1], strerror(errno));*/
+		if ((fd = open(av[1], O_RDONLY)) > -1)
+		{
+			ft_cat(fd);
+			close(fd);
+		}
+		else
+			printf("ft_cat: %s: %s\n", av[1], strerror(errno));
 	}
 	else
 		printf("Zero parameter for unit test or one parameter to test cat with a file.\n");
 	return (0);
-} //ATTENTION TRANSFORMER TT LES PRINTF EN FT_PRINTF
+} 
